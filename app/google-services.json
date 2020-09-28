@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "288730864797",
+    "firebase_url": "https://badgerhivemanagementsystem.firebaseio.com",
+    "project_id": "badgerhivemanagementsystem",
+    "storage_bucket": "badgerhivemanagementsystem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288730864797:android:dec2ab7665c2023ce48874",
+        "android_client_info": {
+          "package_name": "com.example.badgerhivemanagementsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288730864797-nb40stucgma8vpvcjdfgcm5g0flk2q8a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCjZ6VIc5a_sModrSaJVlm-7SMQs-fG8o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288730864797-nb40stucgma8vpvcjdfgcm5g0flk2q8a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
