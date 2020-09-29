@@ -7,13 +7,21 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigation;
-    private Button btn_photo_upload;
+    private Button btn_edit_pic;
+    public FirebaseAuth mAuth;
+    String username;
+    String email;
+    String apiary_address;
+    String phone_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +35,23 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new ProfileFragment()).commit();
 
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
+        hideBottomBar(true);
+
         //btn_photo_upload = findViewById(R.id.btn_photo);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        // updateUI(currentUser);
+    }
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
