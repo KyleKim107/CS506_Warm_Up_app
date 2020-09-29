@@ -3,24 +3,31 @@ package com.example.badgerhivemanagementsystem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    BottomNavigationView bottomNavigation;
+    private Button btn_photo_upload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setSelectedItemId(R.id.nav_profile);
+        bottomNavigation.setOnNavigationItemSelectedListener(navListener);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new ProfileFragment()).commit();
+
+        //btn_photo_upload = findViewById(R.id.btn_photo);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -30,11 +37,11 @@ public class MainActivity extends AppCompatActivity {
                     Fragment selectedFragment = null;
 
                     switch (item.getItemId()) {
-                        case R.id.nav_hives:
-                            selectedFragment = new HivesFragment();
-                            break;
                         case R.id.nav_profile:
                             selectedFragment = new ProfileFragment();
+                            break;
+                        case R.id.nav_hives:
+                            selectedFragment = new HivesFragment();
                             break;
                     }
 
@@ -44,4 +51,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    public void hideBottomBar(boolean isHidden) {
+        bottomNavigation.setVisibility(isHidden ? View.GONE : View.VISIBLE);
+    }
 }
