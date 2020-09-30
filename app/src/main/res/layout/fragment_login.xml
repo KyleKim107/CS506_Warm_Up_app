@@ -33,7 +33,7 @@
             app:layout_constraintVertical_bias="0.657">
 
             <EditText
-                android:id="@+id/username_register"
+                android:id="@+id/fullname_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -46,12 +46,12 @@
                 android:hint="  Username"
                 android:textColor="@color/grey"
                 android:textSize="22sp"
-                app:layout_constraintBottom_toTopOf="@+id/password_register"
+                app:layout_constraintBottom_toTopOf="@+id/email_register"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/password_register"
+                android:id="@+id/email_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"

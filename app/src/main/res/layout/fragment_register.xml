@@ -28,13 +28,12 @@
             android:paddingBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.523"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.857">
+            app:layout_constraintVertical_bias="0.711">
 
             <EditText
-                android:id="@+id/username_register"
+                android:id="@+id/fullname_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -44,15 +43,15 @@
                 android:layout_marginBottom="12dp"
                 android:ems="10"
                 android:fontFamily="@font/alegreya_sans_sc"
-                android:hint="  Username"
+                android:hint="  Full Name"
                 android:textColor="@color/grey"
                 android:textSize="22sp"
-                app:layout_constraintBottom_toTopOf="@+id/password_register"
+                app:layout_constraintBottom_toTopOf="@+id/email_register"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/password_register"
+                android:id="@+id/email_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -62,11 +61,11 @@
                 android:layout_marginBottom="12dp"
                 android:ems="10"
                 android:fontFamily="@font/alegreya_sans_sc"
-                android:hint=" Password"
+                android:hint=" Email"
                 android:inputType="textPassword"
                 android:textColor="@color/grey"
                 android:textSize="22sp"
-                app:layout_constraintBottom_toTopOf="@+id/apiaryaddress_register"
+                app:layout_constraintBottom_toTopOf="@+id/password_register"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -79,7 +78,7 @@
                 android:layout_marginLeft="115dp"
                 android:layout_marginEnd="115dp"
                 android:layout_marginRight="115dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="70dp"
                 android:background="@color/lightbrown"
                 android:fontFamily="@font/alegreya_sans_sc"
                 android:padding="5dp"
@@ -92,7 +91,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/apiaryaddress_register"
+                android:id="@+id/password_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/phonenumber_register"
@@ -103,27 +102,8 @@
                 android:layout_marginBottom="12dp"
                 android:ems="10"
                 android:fontFamily="@font/alegreya_sans_sc"
-                android:hint=" Apiary Address"
+                android:hint=" Password"
                 android:inputType="textPassword"
-                android:textColor="@color/grey"
-                android:textSize="22sp"
-                app:layout_constraintBottom_toTopOf="@+id/email_register"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <EditText
-                android:id="@+id/email_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/signup_register"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="12dp"
-                android:ems="10"
-                android:fontFamily="@font/alegreya_sans_sc"
-                android:hint=" Email"
                 android:textColor="@color/grey"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toTopOf="@+id/phonenumber_register"
@@ -139,10 +119,10 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="30dp"
                 android:ems="10"
                 android:fontFamily="@font/alegreya_sans_sc"
-                android:hint="  Phone Number"
+                android:hint=" Phone Number"
                 android:textColor="@color/grey"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toTopOf="@+id/signup_register"
@@ -166,7 +146,7 @@
                 android:id="@+id/signUpText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="25dp"
                 android:fontFamily="@font/alegreya_sans_sc"
                 android:text="SIGN IN WITH AN EXISTING ACOUNT"
                 android:textColor="#0645AD"
@@ -185,10 +165,10 @@
             android:background="@color/yellow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.069" />
+            app:layout_constraintVertical_bias="0.138" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -196,10 +176,10 @@
             android:layout_height="200dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.069"
+            app:layout_constraintVertical_bias="0.138"
             app:srcCompat="@drawable/ic_baseline_emoji_nature_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
