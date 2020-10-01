@@ -24,8 +24,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mSignInTxt;
     TextView mSignUpTxt;
     FirebaseAuth mAuth;
+    DatabaseReference reference;
     String fullName, email, password, phone;
     String id;
 
@@ -96,8 +100,19 @@ public class MainActivity extends AppCompatActivity {
         EditText email_text = findViewById(R.id.email_login);
         EditText password_text = findViewById(R.id.password_login);
 
-        email = email_text.getText().toString();
-        password = password_text.getText().toString();
+        email = email_text.getText().toString().trim();
+        password = password_text.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            mEmail.setError("Email address required.");
+            mEmail.requestFocus();
+            return;
+        }
+        if (password.isEmpty()) {
+            mPassword.setError("Password required.");
+            mPassword.requestFocus();
+            return;
+        }
 
         signInWithEmailAndPassword(email, password);
     }
@@ -183,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         createAccount(email, password);
     }
 
-    public void createAccount(String email_address, String password) {
+    public void createAccount(final String email_address, String password) {
         mAuth.createUserWithEmailAndPassword(email_address, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -191,6 +206,23 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser curr_user = mAuth.getCurrentUser();
+                            id = curr_user.getUid();
+
+                            reference = FirebaseDatabase.getInstance().getReference("Users").child(id);
+
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("id", id);
+                            hashMap.put("email", email_address);
+                            hashMap.put("name", fullName);
+                            hashMap.put("phone", phone);
+                            hashMap.put("imageURL", "default");
+
+                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    // updates database in real time
+                                }
+                            });
                             createUI(curr_user);
                         } else {
                             // If sign in fails, display a message to the user.
