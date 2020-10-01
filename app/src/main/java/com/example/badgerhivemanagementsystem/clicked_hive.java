@@ -21,8 +21,8 @@ public class clicked_hive  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clicked_hive);
 
-        imageView =  imageView.findViewById(R.id.imageView2);
-        textView = textView.findViewById(R.id.NameOfphto);
+        imageView =  findViewById(R.id.imageView2);
+        textView = findViewById(R.id.NameOfphto);
 
         Intent intent = getIntent();
         if(intent.getExtras() != null){
