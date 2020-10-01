@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        EditText email_text = findViewById(R.id.email);
-        EditText password_text = findViewById(R.id.password);
+        EditText email_text = findViewById(R.id.email_login);
+        EditText password_text = findViewById(R.id.password_login);
 
         email = email_text.getText().toString();
         password = password_text.getText().toString();
@@ -140,43 +140,36 @@ public class MainActivity extends AppCompatActivity {
             mFullName.requestFocus();
             return;
         }
-
         if (email.isEmpty()) {
             mEmail.setError("Email address required.");
             mEmail.requestFocus();
             return;
         }
-
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             mEmail.setError("Enter a valid email address.");
             mEmail.requestFocus();
             return;
         }
-
         if (password.isEmpty()) {
             mPassword.setError("Password required.");
             mPassword.requestFocus();
             return;
         }
-
         if (password.length() < 6) {
             mPassword.setError("Password should be at least 6 characters long.");
             mPassword.requestFocus();
             return;
         }
-
         if (phone.isEmpty()) {
             mPhone.setError("Phone required.");
             mPhone.requestFocus();
             return;
         }
-
         if (!Patterns.PHONE.matcher(phone).matches()) {
             mPhone.setError("Enter a valid phone number.");
             mPhone.requestFocus();
             return;
         }
-
         createAccount(email, password);
     }
 
