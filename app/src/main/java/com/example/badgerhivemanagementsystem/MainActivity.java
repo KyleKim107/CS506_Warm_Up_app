@@ -83,10 +83,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signUp(View view) {
+        hideBottomBar(true);
         openFragment(RegisterFragment.newInstance());
     }
 
     public void signIn(View view) {
+        hideBottomBar(true);
         openFragment(LoginFragment.newInstance());
     }
 
@@ -98,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
         password = password_text.getText().toString();
 
         signInWithEmailAndPassword(email, password);
+    }
+
+    public void logout(View view) {
+        FirebaseAuth.getInstance().signOut();
+        openFragment(LoginFragment.newInstance());
+        Toast.makeText(this, "Successfully logged out.",
+                Toast.LENGTH_LONG).show();
+        hideBottomBar(true);
     }
 
     public void signInWithEmailAndPassword(String email, String password) {
