@@ -33,8 +33,8 @@ import com.google.firebase.auth.FirebaseUser;
         bottomNavigation.setSelectedItemId(R.id.nav_profile);
         bottomNavigation.setOnNavigationItemSelectedListener(navListener);
 
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                new ProfileFragment()).commit();
+       getSupportFragmentManager().beginTransaction().replace(R.id.container,
+              new LoginFragment()).addToBackStack(null).commit();
 
         // Initialize Firebase Auth
 
@@ -50,6 +50,8 @@ import com.google.firebase.auth.FirebaseUser;
                 openNewActivity();
             }
         });
+
+        button.setVisibility(View.GONE);
 
         //btn_photo_upload = findViewById(R.id.btn_photo);
     }
@@ -84,8 +86,8 @@ import com.google.firebase.auth.FirebaseUser;
                             break;
                     }
 
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                            selectedFragment).commit();
+                   getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                         selectedFragment).addToBackStack(null).commit();
 
                     return true;
                 }
@@ -94,4 +96,29 @@ import com.google.firebase.auth.FirebaseUser;
     public void hideBottomBar(boolean isHidden) {
         bottomNavigation.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
-}
+
+        public void create(View view) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                    new RegisterFragment()).addToBackStack(null).commit();
+        }
+
+        public void register(View view) {
+            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+
+            button.setVisibility(View.VISIBLE);
+        }
+
+        public void login(View view) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                    new LoginFragment()).addToBackStack(null).commit();
+        }
+
+        public void signIn(View view) {
+            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+            button.setVisibility(View.VISIBLE);
+        }
+    }
