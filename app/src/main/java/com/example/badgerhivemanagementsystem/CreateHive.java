@@ -4,23 +4,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.example.badgerhivemanagementsystem.MainActivity;
 import com.example.badgerhivemanagementsystem.R;
 
 public class CreateHive extends AppCompatActivity {
 
     GridView gridView;
 
-    String[] name = {"test name"};
-    int[] images = {R.drawable.ic_launcher_background};
+    String[] name = {"Hive"};
+    int[] images = {R.drawable.hive};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +34,27 @@ public class CreateHive extends AppCompatActivity {
         setContentView(R.layout.activity_create_hive);
 
         gridView = findViewById(R.id.gridView);
+
         CustomAdapter customerAdapt = new CustomAdapter(    name , images , this);
+
         gridView.setAdapter(customerAdapt);
+
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedName = name[i];
+                int selectedImage = images[i];
+
+                Log.i( "selectedImage",Integer.toString(selectedImage));
+
+
+
+                Intent intend = new Intent(CreateHive.this, clicked_hive.class);
+                intend.putExtra("name", selectedName).putExtra("image", selectedImage);
+                startActivity(intend);
+            }
+        });
 
     }
 
