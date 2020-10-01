@@ -13,6 +13,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.badgerhivemanagementsystem.R;
+
 public class CreateHive extends AppCompatActivity {
 
     GridView gridView;

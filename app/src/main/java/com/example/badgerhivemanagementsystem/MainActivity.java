@@ -10,19 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.badgerhivemanagementsystem.Create_Hive.CreateHive;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+    public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigation;
-    private Button btn_edit_pic;
-    public FirebaseAuth mAuth;
-    String username;
-    String email;
-    String apiary_address;
+        BottomNavigationView bottomNavigation;
+        private Button btn_edit_pic;
+        public FirebaseAuth mAuth;
+        String username;
+        String email;
+        String apiary_address;
     String phone_number;
     Button button;
     @Override
@@ -85,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
                             break;
                     }
 
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            selectedFragment).commit();
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                            selectedFragment).commit();
 
                     return true;
                 }
