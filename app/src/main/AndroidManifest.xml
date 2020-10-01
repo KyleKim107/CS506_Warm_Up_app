@@ -9,17 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-        <activity android:name=".CreateHive">
-        </activity>
+        <activity
+            android:name=".Add_Hive"
+            android:label="@string/title_activity_add__hive"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".CreateHive"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".clicked_hive" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
