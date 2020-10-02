@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.badgerhivemanagementsystem.Model.User;
+import com.example.badgerhivemanagementsystem.ui.listhive.ApiaryFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -335,7 +336,10 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.nav_hives:
                             openNewActivity();
-                           // selectedFragment = new HivesFragment();
+                            selectedFragment = new HivesFragment();
+                            break;
+                        case R.id.nav_apiary:
+                            selectedFragment = new ApiaryFragment();
                             break;
                     }
 
