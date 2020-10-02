@@ -317,12 +317,12 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.nav_hives:
                             openNewActivity();
-                            //selectedFragment = new HivesFragment();
+                           // selectedFragment = new HivesFragment();
                             break;
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                            selectedFragment).commit();
+                            selectedFragment).addToBackStack(null).commit();
 
                     return true;
                 }
@@ -344,28 +344,4 @@ public class MainActivity extends AppCompatActivity {
         return photoURL;
     }
 
-//        public void create(View view) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.container,
-//                    new RegisterFragment()).addToBackStack(null).commit();
-//        }
-
-//        public void register(View view) {
-//            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-//                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-//            }
-//
-//            button.setVisibility(View.VISIBLE);
-//        }
-
-//        public void login(View view) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.container,
-//                    new LoginFragment()).addToBackStack(null).commit();
-//        }
-
-//        public void signIn(View view) {
-//            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-//                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-//            }
-//            button.setVisibility(View.VISIBLE);
-//        }
     }
