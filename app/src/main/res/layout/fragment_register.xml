@@ -151,7 +151,7 @@
                 android:fontFamily="@font/alegreya_sans_sc"
                 android:text="SIGN IN WITH AN EXISTING ACOUNT"
                 android:textColor="#0645AD"
-                android:onClick="login"
+                android:onClick="signIn"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
