@@ -25,7 +25,7 @@ import android.widget.TextView;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 
-public class HivesFragment extends Fragment {
+public class HivesFragment extends Fragment  implements View.OnClickListener {
 
     GridView gridView;
     View view;
@@ -37,18 +37,38 @@ public class HivesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_hives, container, false);
+        addButton = view.findViewById(R.id.add);
+        addButton.setOnClickListener(this);
 
         String[] menuItems = { "1","2","3","4","5","6"};
-        //gridView = (GridView) view.findViewById(R.id.gridView);
         ListView listview = (ListView) view.findViewById(R.id.gridView);
         ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String >(
                 getActivity(),
                 android.R.layout.simple_expandable_list_item_1,
                 menuItems
         );
-
         listview.setAdapter(listViewAdapter);
+
+//        addButton.setOnClickListener( new View.OnClickListener(){
+
+            //new Intent( CreateHive.this , Add_Hive.class)
+
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent =new Intent(HivesFragment.this , Add_Hive.class);
+//                startActivity(intent);
+//            }
+//        });
+
+
+
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity() , Add_Hive.class);
+        startActivity(intent);
     }
 
 //
