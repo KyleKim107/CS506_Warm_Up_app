@@ -46,12 +46,12 @@ public class MainActivity extends AppCompatActivity {
     // Register
     Button mEditPicture;
     EditText mFullName, mEmail, mPassword, mPhone;
-    Button mSignInBtn;
+    Button mSignUpBtn;
     TextView mSignInTxt;
 
     // Login
     EditText email_text, password_text;
-    Button mSignUpBtn;
+    Button mSignInBtn;
     TextView mSignUpTxt;
 
     String fullName, email, password, phone, photoURL, id;
@@ -241,9 +241,9 @@ public class MainActivity extends AppCompatActivity {
             mPhone.requestFocus();
             return;
         }
-        if (!Patterns.PHONE.matcher(phone).matches()) {
-            mPhone.setError("Enter a valid phone number.");
-            mPhone.requestFocus();
+        if (password.length() < 10) {
+            mPassword.setError("Enter a valid phone number.");
+            mPassword.requestFocus();
             return;
         }
         createAccount(email, password);
