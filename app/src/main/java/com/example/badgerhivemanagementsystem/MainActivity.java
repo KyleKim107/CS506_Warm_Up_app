@@ -3,27 +3,60 @@ package com.example.badgerhivemanagementsystem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.badgerhivemanagementsystem.Model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-    public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.HashMap;
 
-        BottomNavigationView bottomNavigation;
-        private Button btn_edit_pic;
-        public FirebaseAuth mAuth;
-        String username;
-        String email;
-        String apiary_address;
-    String phone_number;
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
+public class MainActivity extends AppCompatActivity {
+
+    BottomNavigationView bottomNavigation;
+    Button mEditPicture;
+    TextView mDisplayName, mPhoneNumber;
+    CircleImageView mProfileImage;
+    EditText mFullName, mEmail, mPassword, mPhone;
+    Button mSignUpBtn;
+    Button mSignInBtn;
+    TextView mSignInTxt;
+    TextView mSignUpTxt;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    DatabaseReference reference;
+    String fullName, email, password, phone;
+    String photoURL;
+    String id;
     Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +66,10 @@ import com.google.firebase.auth.FirebaseUser;
         bottomNavigation.setSelectedItemId(R.id.nav_profile);
         bottomNavigation.setOnNavigationItemSelectedListener(navListener);
 
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                new ProfileFragment()).commit();
+       getSupportFragmentManager().beginTransaction().replace(R.id.container,
+              new LoginFragment()).addToBackStack(null).commit();
 
         // Initialize Firebase Auth
-
         mAuth = FirebaseAuth.getInstance();
 
         hideBottomBar(true);
@@ -51,7 +83,9 @@ import com.google.firebase.auth.FirebaseUser;
             }
         });
 
-        //btn_photo_upload = findViewById(R.id.btn_photo);
+        button.setVisibility(View.GONE);
+
+        onStart();
     }
 
     public void openNewActivity() {
@@ -59,15 +93,217 @@ import com.google.firebase.auth.FirebaseUser;
         startActivity(intent);
     }
 
-        @Override
+    @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        // updateUI(currentUser);
+        currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            openFragment(LoginFragment.newInstance());
+        } else {
+            //TODO
+            createUI(currentUser);
+        }
     }
 
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
+    public void signUp(View view) {
+        hideBottomBar(true);
+        openFragment(RegisterFragment.newInstance());
+    }
+
+    public void signIn(View view) {
+        hideBottomBar(true);
+        openFragment(LoginFragment.newInstance());
+    }
+
+    public void login(View view) {
+        EditText email_text = findViewById(R.id.email_login);
+        EditText password_text = findViewById(R.id.password_login);
+
+        email = email_text.getText().toString().trim();
+        password = password_text.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            mEmail.setError("Email address required.");
+            mEmail.requestFocus();
+            return;
+        }
+        if (password.isEmpty()) {
+            mPassword.setError("Password required.");
+            mPassword.requestFocus();
+            return;
+        }
+
+        signInWithEmailAndPassword(email, password);
+    }
+
+    public void logout(View view) {
+        FirebaseAuth.getInstance().signOut();
+        openFragment(LoginFragment.newInstance());
+        Toast.makeText(this, "Successfully logged out.",
+                Toast.LENGTH_LONG).show();
+        hideBottomBar(true);
+    }
+
+    public void signInWithEmailAndPassword(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            currentUser = mAuth.getCurrentUser();
+                            id = mAuth.getCurrentUser().getUid();
+                            createUI(currentUser);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void register(View view) {
+        mEditPicture = findViewById(R.id.editpic_register);
+        mFullName = findViewById(R.id.fullname_register);
+        mEmail = findViewById(R.id.email_register);
+        mPassword = findViewById(R.id.password_register);
+        mPhone = findViewById(R.id.phone_register);
+        mSignUpBtn = findViewById(R.id.signup_register);
+        mSignInTxt = findViewById(R.id.signin_register);
+
+        fullName = mFullName.getText().toString().trim();
+        email = mEmail.getText().toString().trim();
+        password = mPassword.getText().toString().trim();
+        phone = mPhone.getText().toString().trim();
+
+        if (fullName.isEmpty()) {
+            mFullName.setError("Full name required.");
+            mFullName.requestFocus();
+            return;
+        }
+        if (email.isEmpty()) {
+            mEmail.setError("Email address required.");
+            mEmail.requestFocus();
+            return;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmail.setError("Enter a valid email address.");
+            mEmail.requestFocus();
+            return;
+        }
+        if (password.isEmpty()) {
+            mPassword.setError("Password required.");
+            mPassword.requestFocus();
+            return;
+        }
+        if (password.length() < 6) {
+            mPassword.setError("Password should be at least 6 characters long.");
+            mPassword.requestFocus();
+            return;
+        }
+        if (phone.isEmpty()) {
+            mPhone.setError("Phone required.");
+            mPhone.requestFocus();
+            return;
+        }
+        if (!Patterns.PHONE.matcher(phone).matches()) {
+            mPhone.setError("Enter a valid phone number.");
+            mPhone.requestFocus();
+            return;
+        }
+        createAccount(email, password);
+    }
+
+    public void createAccount(final String email_address, String password) {
+        mAuth.createUserWithEmailAndPassword(email_address, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "createUserWithEmail:success");
+                            currentUser = mAuth.getCurrentUser();
+                            id = currentUser.getUid();
+
+                            // User user = new User(id, fullName, "default", phone, new ArrayList<>(), new ArrayList<>());
+
+                            reference = FirebaseDatabase.getInstance().getReference("Users").child(id);
+
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("id", id);
+                            hashMap.put("name", fullName);
+                            hashMap.put("imageURL", "default");
+                            hashMap.put("phone", phone);
+
+                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        // updates database in real time
+                                        createUI(currentUser);
+                                    }
+                                }
+                            });
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void createUI(FirebaseUser user) {
+        if (fullName != null) {
+            // User has just signed up - update display name
+            if (user != null) {
+                UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(fullName)
+                        .build();
+                user.updateProfile(profile);
+            }
+        } else {
+            fullName = user.getDisplayName();
+            phone = user.getPhoneNumber();
+//            photoURL = user.getPhotoUrl();
+        }
+
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+//                photoURL = user.getImageURL();
+                if (user.getImageURL().equals("default")) {
+                    //mProfileImage.setImageResource(R.mipmap.ic_launcher);
+
+                } else {
+                    //Glide.with(MainActivity.this).load(user.getImageURL()).into(mProfileImage);
+                }
+                openFragment(ProfileFragment.newInstance("", ""));
+                hideBottomBar(false);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        openFragment(ProfileFragment.newInstance("", ""));
+        hideBottomBar(false);
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -80,12 +316,13 @@ import com.google.firebase.auth.FirebaseUser;
                             selectedFragment = new ProfileFragment();
                             break;
                         case R.id.nav_hives:
-                            selectedFragment = new HivesFragment();
+                            openNewActivity();
+                            //selectedFragment = new HivesFragment();
                             break;
                     }
 
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                            selectedFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                            selectedFragment).commit();
 
                     return true;
                 }
@@ -94,4 +331,41 @@ import com.google.firebase.auth.FirebaseUser;
     public void hideBottomBar(boolean isHidden) {
         bottomNavigation.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
-}
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+//        public void create(View view) {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+//                    new RegisterFragment()).addToBackStack(null).commit();
+//        }
+
+//        public void register(View view) {
+//            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+//                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+//            }
+//
+//            button.setVisibility(View.VISIBLE);
+//        }
+
+//        public void login(View view) {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+//                    new LoginFragment()).addToBackStack(null).commit();
+//        }
+
+//        public void signIn(View view) {
+//            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+//                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+//            }
+//            button.setVisibility(View.VISIBLE);
+//        }
+    }
