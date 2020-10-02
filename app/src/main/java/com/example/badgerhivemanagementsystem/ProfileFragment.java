@@ -72,15 +72,15 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
-        if (currentUser != null) {
-            TextView textViewName = (TextView) view.findViewById(R.id.profileName);
-            textViewName.setText(fullName);
-
-            TextView textViewPhone = (TextView) view.findViewById(R.id.phoneNumber);
-            textViewPhone.setText(phone);
-
-            CircleImageView circleImageViewPhotoURL = (CircleImageView) view.findViewById(R.id.profile_image);
-            circleImageViewPhotoURL.setImageResource(R.mipmap.ic_launcher);
+//        if (currentUser != null) {
+//            TextView textViewName = (TextView) view.findViewById(R.id.profileName);
+//            textViewName.setText(fullName);
+//
+//            TextView textViewPhone = (TextView) view.findViewById(R.id.phoneNumber);
+//            textViewPhone.setText(phone);
+//
+//            CircleImageView circleImageViewPhotoURL = (CircleImageView) view.findViewById(R.id.profile_image);
+//            circleImageViewPhotoURL.setImageResource(R.mipmap.ic_launcher);
 //            if (photoURL.equals("default")) {
             //circleImageViewPhotoURL.setImageResource(R.mipmap.ic_launcher);
 //            }
@@ -88,7 +88,7 @@ public class ProfileFragment extends Fragment {
             // ???????
             //Glide.with(this).load(photoURL).into(circleImageViewPhotoURL);
             //}
-        }
+//        }
 
         // Inflate the layout for this fragment
         return view;

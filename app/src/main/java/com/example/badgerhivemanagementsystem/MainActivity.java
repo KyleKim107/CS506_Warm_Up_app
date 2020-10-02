@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     String photoURL;
     String id;
     Button button;
+    Button logoutBtn;
+    TextView profileBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
         hideBottomBar(true);
 
         button =  findViewById(R.id.button2);
+        mProfileImage = findViewById(R.id.profile_image);
+        logoutBtn = findViewById(R.id.logoutBtn);
+        mDisplayName = findViewById(R.id.profileName);
+        mPhoneNumber = findViewById(R.id.phoneNumber);
+        profileBackground = findViewById(R.id.profileBackground);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         button.setVisibility(View.GONE);
+        mProfileImage.setVisibility(View.GONE);
+        logoutBtn.setVisibility(View.GONE);
+        mDisplayName.setVisibility(View.GONE);
+        mPhoneNumber.setVisibility(View.GONE);
+        profileBackground.setVisibility(View.GONE);
 
         onStart();
     }
@@ -279,18 +291,24 @@ public class MainActivity extends AppCompatActivity {
 //            photoURL = user.getPhotoUrl();
         }
 
+        profileBackground.setVisibility(View.VISIBLE);
+        mProfileImage.setVisibility(View.VISIBLE);
+        logoutBtn.setVisibility(View.VISIBLE);
+        mDisplayName.setVisibility(View.VISIBLE);
+        mPhoneNumber.setVisibility(View.VISIBLE);
+
         reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-//                photoURL = user.getImageURL();
+                mDisplayName.setText(user.getName());
                 if (user.getImageURL().equals("default")) {
-                    //mProfileImage.setImageResource(R.mipmap.ic_launcher);
+                    mProfileImage.setImageResource(R.mipmap.ic_launcher);
 
                 } else {
-                    //Glide.with(MainActivity.this).load(user.getImageURL()).into(mProfileImage);
+                    Glide.with(MainActivity.this).load(user.getImageURL()).into(mProfileImage);
                 }
                 openFragment(ProfileFragment.newInstance("", ""));
                 hideBottomBar(false);
