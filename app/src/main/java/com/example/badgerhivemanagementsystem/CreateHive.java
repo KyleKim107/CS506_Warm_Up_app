@@ -12,13 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.example.badgerhivemanagementsystem.MainActivity;
-import com.example.badgerhivemanagementsystem.R;
 
 public class CreateHive extends AppCompatActivity {
 
@@ -26,6 +25,7 @@ public class CreateHive extends AppCompatActivity {
 
     String[] name = {"Hive"};
     int[] images = {R.drawable.hive};
+    Button addButton ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,18 @@ public class CreateHive extends AppCompatActivity {
         CustomAdapter customerAdapt = new CustomAdapter(    name , images , this);
 
         gridView.setAdapter(customerAdapt);
+        addButton = findViewById(R.id.add);
 
+        addButton.setOnClickListener( new View.OnClickListener(){
+
+            //new Intent( CreateHive.this , Add_Hive.class)
+
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(CreateHive.this , Add_Hive.class);
+                startActivity(intent);
+            }
+        });
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

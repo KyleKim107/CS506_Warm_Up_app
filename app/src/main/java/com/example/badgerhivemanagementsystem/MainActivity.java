@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import de.hdodenhof.circleimageview.CircleImageView;
+//import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+//import com.bumptech.glide.Glide;
 import com.example.badgerhivemanagementsystem.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     Button mEditPicture;
     TextView mDisplayName, mPhoneNumber;
-    CircleImageView mProfileImage;
+   // CircleImageView mProfileImage;
     EditText mFullName, mEmail, mPassword, mPhone;
     Button mSignUpBtn;
     Button mSignInBtn;
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openNewActivity() {
-        Intent intent = new Intent(this , CreateHive.class);
+        Intent intent = new Intent(this , HivesFragment.class);
         startActivity(intent);
     }
 
@@ -225,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
         createAccount(email, password);
     }
 
+
     public void createAccount(final String email_address, String password) {
         mAuth.createUserWithEmailAndPassword(email_address, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -286,12 +287,12 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
 //                photoURL = user.getImageURL();
-                if (user.getImageURL().equals("default")) {
-                    //mProfileImage.setImageResource(R.mipmap.ic_launcher);
-
-                } else {
-                    //Glide.with(MainActivity.this).load(user.getImageURL()).into(mProfileImage);
-                }
+//                if (user.getImageURL().equals("default")) {
+//                    //mProfileImage.setImageResource(R.mipmap.ic_launcher);
+//
+//                } else {
+//                    //Glide.with(MainActivity.this).load(user.getImageURL()).into(mProfileImage);
+//                }
                 openFragment(ProfileFragment.newInstance("", ""));
                 hideBottomBar(false);
             }
@@ -316,8 +317,8 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new ProfileFragment();
                             break;
                         case R.id.nav_hives:
-                            openNewActivity();
-                            //selectedFragment = new HivesFragment();
+                           // openNewActivity();
+                            selectedFragment = new HivesFragment();
                             break;
                     }
 
