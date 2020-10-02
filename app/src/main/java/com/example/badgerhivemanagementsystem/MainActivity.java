@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mSignInTxt;
 
     // Login
+    EditText email_text, password_text;
     Button mSignUpBtn;
     TextView mSignUpTxt;
 
@@ -86,11 +87,7 @@ public class MainActivity extends AppCompatActivity {
         hideBottomBar(true);
 
         button =  findViewById(R.id.button2);
-        mProfileImage = findViewById(R.id.profile_image);
-        logoutBtn = findViewById(R.id.logoutBtn);
-        mDisplayName = findViewById(R.id.profileName);
-        mPhoneNumber = findViewById(R.id.phoneNumber);
-        profileBackground = findViewById(R.id.profileBackground);
+        button.setVisibility(View.GONE);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +96,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button.setVisibility(View.GONE);
+        // Hide profile layout in case login screen appears first
+        mProfileImage = findViewById(R.id.profile_image);
+        logoutBtn = findViewById(R.id.logoutBtn);
+        mDisplayName = findViewById(R.id.profileName);
+        mPhoneNumber = findViewById(R.id.phoneNumber);
+        profileBackground = findViewById(R.id.profileBackground);
+
         mProfileImage.setVisibility(View.GONE);
         logoutBtn.setVisibility(View.GONE);
         mDisplayName.setVisibility(View.GONE);
@@ -145,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        EditText email_text = findViewById(R.id.email_login);
-        EditText password_text = findViewById(R.id.password_login);
+        email_text = findViewById(R.id.email_login);
+        password_text = findViewById(R.id.password_login);
 
         email = email_text.getText().toString().trim();
         password = password_text.getText().toString().trim();
