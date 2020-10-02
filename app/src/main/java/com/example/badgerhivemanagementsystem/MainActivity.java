@@ -42,23 +42,31 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigation;
+
+    // Register
     Button mEditPicture;
-    TextView mDisplayName, mPhoneNumber;
-    CircleImageView mProfileImage;
     EditText mFullName, mEmail, mPassword, mPhone;
-    Button mSignUpBtn;
     Button mSignInBtn;
     TextView mSignInTxt;
+
+    // Login
+    Button mSignUpBtn;
     TextView mSignUpTxt;
+
+    String fullName, email, password, phone, photoURL, id;
+
+    // Profile
+    TextView mDisplayName, mPhoneNumber;
+    CircleImageView mProfileImage;
+    Button logoutBtn;
+    TextView profileBackground;
+
+    // Firebase
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     DatabaseReference reference;
-    String fullName, email, password, phone;
-    String photoURL;
-    String id;
+
     Button button;
-    Button logoutBtn;
-    TextView profileBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
