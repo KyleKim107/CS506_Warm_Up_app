@@ -4,10 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.badgerhivemanagementsystem.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import androidx.annotation.NonNull;
@@ -16,6 +24,14 @@ import androidx.fragment.app.Fragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment  {
+
+    TextView mDisplayName, mPhoneNumber;
+    CircleImageView mProfileImage;
+    Button logoutBtn;
+    TextView profileBackground;
+
+    DatabaseReference reference;
+    FirebaseUser fuser;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +47,7 @@ public class ProfileFragment extends Fragment  {
     public String fullName;
     public String phone;
     public String photoURL;
-    View view;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -66,24 +82,35 @@ public class ProfileFragment extends Fragment  {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_profile, container, false);
-//        if (currentUser != null) {
-//            TextView textViewName = (TextView) view.findViewById(R.id.profileName);
-//            textViewName.setText(fullName);
-//
-//            TextView textViewPhone = (TextView) view.findViewById(R.id.phoneNumber);
-//            textViewPhone.setText(phone);
-//
-//            CircleImageView circleImageViewPhotoURL = (CircleImageView) view.findViewById(R.id.profile_image);
-//            circleImageViewPhotoURL.setImageResource(R.mipmap.ic_launcher);
-//            if (photoURL.equals("default")) {
-            //circleImageViewPhotoURL.setImageResource(R.mipmap.ic_launcher);
-//            }
-            //else {
-            // ???????
-            //Glide.with(this).load(photoURL).into(circleImageViewPhotoURL);
-            //}
-//        }
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        mProfileImage = view.findViewById(R.id.profile_image);
+        logoutBtn = view.findViewById(R.id.logoutBtn);
+        mDisplayName = view.findViewById(R.id.profileName);
+        mPhoneNumber = view.findViewById(R.id.phoneNumber);
+        profileBackground = view.findViewById(R.id.profileBackground);
+
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                mDisplayName.setText(user.getName());
+                mPhoneNumber.setText(user.getPhone());
+                if (user.getImageURL().equals("default")) {
+                    mProfileImage.setImageResource(R.mipmap.ic_launcher);
+                } else {
+                    Glide.with(getContext()).load(user.getImageURL()).into(mProfileImage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;

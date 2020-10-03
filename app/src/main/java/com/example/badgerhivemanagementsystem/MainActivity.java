@@ -60,12 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
     String fullName, email, password, phone, photoURL, id;
 
-    // Profile
-    TextView mDisplayName, mPhoneNumber;
-    CircleImageView mProfileImage;
-    Button logoutBtn;
-    TextView profileBackground;
-
     // Firebase
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -98,19 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 openNewActivity();
             }
         });
-
-        // Hide profile layout in case login screen appears first
-        mProfileImage = findViewById(R.id.profile_image);
-        logoutBtn = findViewById(R.id.logoutBtn);
-        mDisplayName = findViewById(R.id.profileName);
-        mPhoneNumber = findViewById(R.id.phoneNumber);
-        profileBackground = findViewById(R.id.profileBackground);
-
-        mProfileImage.setVisibility(View.GONE);
-        logoutBtn.setVisibility(View.GONE);
-        mDisplayName.setVisibility(View.GONE);
-        mPhoneNumber.setVisibility(View.GONE);
-        profileBackground.setVisibility(View.GONE);
 
         onStart();
     }
@@ -316,36 +297,6 @@ public class MainActivity extends AppCompatActivity {
             phone = user.getPhoneNumber();
 //            photoURL = user.getPhotoUrl();
         }
-
-        profileBackground.setVisibility(View.VISIBLE);
-        mProfileImage.setVisibility(View.VISIBLE);
-        logoutBtn.setVisibility(View.VISIBLE);
-        mDisplayName.setVisibility(View.VISIBLE);
-        mPhoneNumber.setVisibility(View.VISIBLE);
-
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                mDisplayName.setText(user.getName());
-                mPhoneNumber.setText(user.getPhone());
-                if (user.getImageURL().equals("default")) {
-                    mProfileImage.setImageResource(R.mipmap.ic_launcher);
-
-                } else {
-                    Glide.with(MainActivity.this).load(user.getImageURL()).into(mProfileImage);
-                }
-                openFragment(ProfileFragment.newInstance("", ""));
-                hideBottomBar(false);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         openFragment(ProfileFragment.newInstance("", ""));
         hideBottomBar(false);
     }
