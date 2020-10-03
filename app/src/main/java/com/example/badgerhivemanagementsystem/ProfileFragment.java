@@ -91,6 +91,14 @@ public class ProfileFragment extends Fragment  {
         return fragment;
     }
 
+    /**
+     * This method sets up the Selection Fragment
+     */
+    public static ProfileFragment newInstance() {
+        ProfileFragment fragment = new ProfileFragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

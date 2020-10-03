@@ -21,18 +21,6 @@ public class ProfileFragment2 extends Fragment  {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        myButton = (Button) view.findViewById(R.id.edit1);
-        myButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick (View v){
-
-                Intent intent = new Intent(getActivity(), SelectionFragment.class);
-                startActivity(intent);
-            }
-
-        });
-
         return view;
     }
 

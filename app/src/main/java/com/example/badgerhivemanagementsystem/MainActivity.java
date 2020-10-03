@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
             phone = user.getPhoneNumber();
 //            photoURL = user.getPhotoUrl();
         }
-        openFragment(ProfileFragment.newInstance("", ""));
+        openFragment(ProfileFragment.newInstance());
         hideBottomBar(false);
     }
 
@@ -333,6 +333,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openSelectionFragment(View view) {
         openFragment(SelectionFragment.newInstance());
+    }
+
+    public void openProfileFragment(View view) {
+        openFragment(ProfileFragment.newInstance());
     }
 
     public String getFullName() {

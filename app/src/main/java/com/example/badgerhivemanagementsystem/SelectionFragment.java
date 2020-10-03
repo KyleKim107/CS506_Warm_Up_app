@@ -20,18 +20,6 @@ public class SelectionFragment extends Fragment {
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_selection, container, false);
-        button = (Button) v.findViewById(R.id.button3);
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick (View v){
-
-                Intent intent = new Intent(getActivity(), SelectedFragment.class);
-                startActivity(intent);
-            }
-
-        });
-
         return v;
     }
 

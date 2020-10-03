@@ -2,178 +2,205 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/profile"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/fui_idp_button_background_anonymous">
+    android:layout_height="match_parent">
 
 
+    <TextView
+        android:id="@+id/publicProfile"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="@color/mustard"
+        android:text="" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:padding="15dp"
         android:text="Public Profile"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="36sp"
         android:typeface="serif" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/contactInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="70dp"
-
-
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="100dp"
+        android:padding="5dp"
         android:text="Contact Info:"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="25sp" />
+        android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="120dp"
-
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="150dp"
         android:fontFamily="@font/alegreya_sans_sc"
-        android:text="Tel: 12345678"
+        android:padding="5dp"
+        android:text="Tel:"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="24sp" />
+        android:textSize="26sp" />
+
+    <TextView
+        android:id="@+id/telNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
+        android:layout_marginTop="150dp"
+        android:fontFamily="@font/alegreya_sans_sc"
+        android:padding="5dp"
+        android:text="12345678"
+        android:textColor="@color/darkbrown"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="26sp" />
 
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/selectYourInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="190dp"
-
-
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="210dp"
+        android:padding="5dp"
         android:text="Select your info:"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="25sp" />
+        android:textSize="30sp" />
 
     <CheckBox
-        android:id="@+id/checkbox_meat"
+        android:id="@+id/inspections"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="230dp"
-        android:fontFamily="@font/alegreya_sans_sc"
-        android:onClick="onCheckboxClicked"
-        android:text="Results of inspections"
-        android:textColor="@color/darkbrown"
-        android:textColorHighlight="#FFFFFF"
-        android:textSize="20sp" />
-
-    <CheckBox
-        android:id="@+id/checkbox_cheese"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="260dp"
         android:fontFamily="@font/alegreya_sans_sc"
         android:onClick="onCheckboxClicked"
+        android:padding="5dp"
+        android:text="Results of inspections"
+        android:textColor="@color/darkbrown"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="26sp" />
+
+    <CheckBox
+        android:id="@+id/health"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="300dp"
+        android:fontFamily="@font/alegreya_sans_sc"
+        android:onClick="onCheckboxClicked"
+        android:padding="5dp"
         android:text="Health"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="26sp" />
 
     <CheckBox
         android:id="@+id/honey_stores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="290dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="340dp"
         android:fontFamily="@font/alegreya_sans_sc"
         android:onClick="onCheckboxClicked"
+        android:padding="5dp"
         android:text="Honey stores"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="26sp" />
 
 
     <CheckBox
         android:id="@+id/queen_production"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="320dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="380dp"
         android:fontFamily="@font/alegreya_sans_sc"
         android:onClick="onCheckboxClicked"
+        android:padding="5dp"
         android:text="Queen production"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="26sp" />
 
     <CheckBox
         android:id="@+id/equipment_hive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="350dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="420dp"
         android:fontFamily="@font/alegreya_sans_sc"
         android:onClick="onCheckboxClicked"
+        android:padding="5dp"
         android:text="Equipment on the hive"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="26sp" />
 
     <CheckBox
         android:id="@+id/equipment_inventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="380dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="460dp"
         android:fontFamily="@font/alegreya_sans_sc"
         android:onClick="onCheckboxClicked"
+        android:padding="5dp"
         android:text="Equipment in inventory"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="26sp" />
 
 
     <CheckBox
         android:id="@+id/losses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="410dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="500dp"
         android:fontFamily="@font/alegreya_sans_sc"
         android:onClick="onCheckboxClicked"
+        android:padding="5dp"
         android:text="Losses"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="26sp" />
 
 
     <CheckBox
         android:id="@+id/gains"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="440dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="540dp"
         android:fontFamily="@font/alegreya_sans_sc"
         android:onClick="onCheckboxClicked"
+        android:padding="5dp"
         android:text="Gains"
         android:textColor="@color/darkbrown"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="26sp" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
+        android:id="@+id/submitBtn"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="600dp"
-        android:text="submit" />
-
+        android:fontFamily="@font/alegreya_sans_sc"
+        android:padding="5dp"
+        android:text="Done"
+        android:onClick="openProfileFragment"
+        android:textSize="26sp"
+        android:textStyle="bold" />
 
 </FrameLayout>
