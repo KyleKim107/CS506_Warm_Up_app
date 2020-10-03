@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 //import com.bumptech.glide.Glide;
@@ -175,6 +177,16 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Successfully logged out.",
                 Toast.LENGTH_LONG).show();
         hideBottomBar(true);
+    }
+
+    public void addApiary(View view){
+        String nameList[] = {"Name 1", "Name 2"};
+
+        ListView apiaryList;
+        apiaryList = (ListView)findViewById(R.id.apiaryListView);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nameList);
+        apiaryList.setAdapter(myAdapter);
+
     }
 
     public void signInWithEmailAndPassword(String email, String password) {
