@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
     public void addApiary(View view){
         //For test purposes
         String nameList[] = {"Mad Urban Bees \n\n 215 Martin Luther King Jr Blvd #017, Madison, WI 53703",
-                "Dane County BeeKeepers Association \n\n 824 Jacobson Ave, Madison, WI 53714"};
+                "Dane County BeeKeepers Association \n\n 824 Jacobson Ave, Madison, WI 53714", "Liquid Gold Honey \n\n 617 Woodvale Dr, Madison, WI 53716"};
 
         ListView apiaryList;
         apiaryList = (ListView)findViewById(R.id.apiaryListView);
