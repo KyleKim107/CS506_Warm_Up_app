@@ -1,5 +1,6 @@
 package com.example.badgerhivemanagementsystem;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,9 +71,7 @@ public class Add_Hive extends AppCompatActivity {
         Information = (EditText) findViewById(R.id.editText6);
         Gain_Loss = (EditText) findViewById(R.id.editText8);
         Inventory = (EditText) findViewById(R.id.editText7);
-
         Q_Production = (EditText) findViewById(R.id.editText4);
-
         Inspection = (EditText) findViewById(R.id.editText11);
         Health_Quality = (EditText) findViewById(R.id.editText12);
         Owner = (EditText) findViewById(R.id.editText10);
@@ -81,14 +80,12 @@ public class Add_Hive extends AppCompatActivity {
 
         mDBReference = FirebaseDatabase.getInstance().getReference().child("Hives");
         hive = new Hive_Data();
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 ImageI = null;
-//        ImageI = ((BitmapDrawable)Image.getDrawable()).getBitmap();
-                //bitmapImageView.setImageBitmap(imageView2Bitmap(imageView));
-
                 NameS = Name.getText().toString();
                 hive.setName(NameS);
                 Honey_StoresS = Honey_Stores.getText().toString();
@@ -110,18 +107,7 @@ public class Add_Hive extends AppCompatActivity {
 
                 Log.w("Check the data" ,ImageI + " "+NameS + " "+Honey_StoresS + " "+InformationS + " "+InspectionS  );
 
-//                    childUpdates = new HashMap<>();
-
-
-//                        HiveInfo = new Hive_Data( NameS, Honey_StoresS, InformationS, Gain_LossS, InventoryS,
-//                                Q_ProductionS, InspectionS, Health_QualityS, ImageI, OwnerS);
-
-                mDBReference.child("Hive1").setValue("Kyle's 1st Hive");
-
-                    //childUpdates.put("/badgerhivemanagementsystem/" + NameS, HiveValue);
-                    //badgerhivemanagementsystem
-                //mDBReference.child("badgerhivemanagementsystem").child("Hives").setValue(HiveInfo);
-                    //mDBReference.updateChildren(childUpdates);
+                mDBReference.child(NameS).setValue(hive);
 
                     mDBReference.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -139,7 +125,8 @@ public class Add_Hive extends AppCompatActivity {
                         }
                     });
 
-
+            Intent intent = new Intent(Add_Hive.this , MainActivity.class);
+            startActivity(intent);
             }
         });
     }
