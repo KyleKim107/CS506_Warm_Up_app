@@ -331,6 +331,10 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setVisibility(isHidden ? View.GONE : View.VISIBLE);
     }
 
+    public void openSelectionFragment(View view) {
+        openFragment(SelectionFragment.newInstance());
+    }
+
     public String getFullName() {
         return fullName;
     }

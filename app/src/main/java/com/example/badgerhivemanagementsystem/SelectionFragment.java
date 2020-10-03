@@ -35,4 +35,12 @@ public class SelectionFragment extends Fragment {
         return v;
     }
 
+    /**
+     * This method sets up the Selection Fragment
+     */
+    public static SelectionFragment newInstance() {
+        SelectionFragment fragment = new SelectionFragment();
+        return fragment;
+    }
+
 }
