@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
 
     // Register
-    Button mEditPicture;
     EditText mFullName, mEmail, mPassword, mPhone;
     Button mSignUpBtn;
     TextView mSignInTxt;
@@ -194,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        mEditPicture = findViewById(R.id.editpic_register);
         mFullName = findViewById(R.id.fullname_register);
         mEmail = findViewById(R.id.email_register);
         mPassword = findViewById(R.id.password_register);

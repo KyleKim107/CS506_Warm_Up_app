@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.657">
+            app:layout_constraintVertical_bias="0.59000003">
 
             <EditText
                 android:id="@+id/email_login"
@@ -43,7 +43,7 @@
                 android:layout_marginBottom="12dp"
                 android:ems="10"
                 android:fontFamily="@font/alegreya_sans_sc"
-                android:hint="  Email"
+                android:hint=" Email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/grey"
                 android:textSize="22sp"
@@ -82,10 +82,10 @@
                 android:layout_marginBottom="55dp"
                 android:background="@color/lightbrown"
                 android:fontFamily="@font/alegreya_sans_sc"
+                android:onClick="login"
                 android:padding="5dp"
                 android:text="SIGN IN"
                 android:textColor="@color/white"
-                android:onClick="login"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -98,8 +98,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:fontFamily="@font/alegreya_sans_sc"
-                android:text="CREATE A NEW ACCOUNT"
                 android:onClick="signUp"
+                android:text="CREATE A NEW ACCOUNT"
                 android:textColor="#0645AD"
                 android:textSize="16sp"
                 android:textStyle="bold"
