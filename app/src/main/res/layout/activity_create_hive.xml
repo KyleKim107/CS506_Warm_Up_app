@@ -9,6 +9,16 @@
     tools:context=".CreateHive"
     >
 
+    <Button
+        android:id="@+id/add"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/gridView"
+        android:background="@drawable/round_button"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Add"
+        android:textColor="#ffff" />
+
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
@@ -17,6 +27,7 @@
         android:horizontalSpacing="4dp"
         android:numColumns="2"
         android:verticalSpacing="4dp" />
+
 
 </LinearLayout>
 

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import de.hdodenhof.circleimageview.CircleImageView;
+//import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,9 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+//import com.bumptech.glide.Glide;
 import com.example.badgerhivemanagementsystem.Model.User;
-import com.example.badgerhivemanagementsystem.ui.listhive.ApiaryFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,31 +43,20 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigation;
-
-    // Register
     Button mEditPicture;
+    TextView mDisplayName, mPhoneNumber;
+   // CircleImageView mProfileImage;
     EditText mFullName, mEmail, mPassword, mPhone;
     Button mSignUpBtn;
-    TextView mSignInTxt;
-
-    // Login
-    EditText email_text, password_text;
     Button mSignInBtn;
+    TextView mSignInTxt;
     TextView mSignUpTxt;
-
-    String fullName, email, password, phone, photoURL, id;
-
-    // Profile
-    TextView mDisplayName, mPhoneNumber;
-    CircleImageView mProfileImage;
-    Button logoutBtn;
-    TextView profileBackground;
-
-    // Firebase
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     DatabaseReference reference;
-
+    String fullName, email, password, phone;
+    String photoURL;
+    String id;
     Button button;
 
     @Override
@@ -89,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         hideBottomBar(true);
 
         button =  findViewById(R.id.button2);
-        button.setVisibility(View.GONE);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,24 +85,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Hide profile layout in case login screen appears first
-        mProfileImage = findViewById(R.id.profile_image);
-        logoutBtn = findViewById(R.id.logoutBtn);
-        mDisplayName = findViewById(R.id.profileName);
-        mPhoneNumber = findViewById(R.id.phoneNumber);
-        profileBackground = findViewById(R.id.profileBackground);
-
-        mProfileImage.setVisibility(View.GONE);
-        logoutBtn.setVisibility(View.GONE);
-        mDisplayName.setVisibility(View.GONE);
-        mPhoneNumber.setVisibility(View.GONE);
-        profileBackground.setVisibility(View.GONE);
+        button.setVisibility(View.GONE);
 
         onStart();
     }
 
     public void openNewActivity() {
-        Intent intent = new Intent(this , CreateHive.class);
+        Intent intent = new Intent(this , HivesFragment.class);
         startActivity(intent);
     }
 
@@ -150,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        email_text = findViewById(R.id.email_login);
-        password_text = findViewById(R.id.password_login);
+        EditText email_text = findViewById(R.id.email_login);
+        EditText password_text = findViewById(R.id.password_login);
 
         email = email_text.getText().toString().trim();
         password = password_text.getText().toString().trim();
@@ -253,13 +229,14 @@ public class MainActivity extends AppCompatActivity {
             mPhone.requestFocus();
             return;
         }
-        if (password.length() < 10) {
-            mPassword.setError("Enter a valid phone number.");
-            mPassword.requestFocus();
+        if (!Patterns.PHONE.matcher(phone).matches()) {
+            mPhone.setError("Enter a valid phone number.");
+            mPhone.requestFocus();
             return;
         }
         createAccount(email, password);
     }
+
 
     public void createAccount(final String email_address, String password) {
         mAuth.createUserWithEmailAndPassword(email_address, password)
@@ -315,25 +292,19 @@ public class MainActivity extends AppCompatActivity {
 //            photoURL = user.getPhotoUrl();
         }
 
-        profileBackground.setVisibility(View.VISIBLE);
-        mProfileImage.setVisibility(View.VISIBLE);
-        logoutBtn.setVisibility(View.VISIBLE);
-        mDisplayName.setVisibility(View.VISIBLE);
-        mPhoneNumber.setVisibility(View.VISIBLE);
-
         reference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-                mDisplayName.setText(user.getName());
-                if (user.getImageURL().equals("default")) {
-                    mProfileImage.setImageResource(R.mipmap.ic_launcher);
-
-                } else {
-                    Glide.with(MainActivity.this).load(user.getImageURL()).into(mProfileImage);
-                }
+//                photoURL = user.getImageURL();
+//                if (user.getImageURL().equals("default")) {
+//                    //mProfileImage.setImageResource(R.mipmap.ic_launcher);
+//
+//                } else {
+//                    //Glide.with(MainActivity.this).load(user.getImageURL()).into(mProfileImage);
+//                }
                 openFragment(ProfileFragment.newInstance("", ""));
                 hideBottomBar(false);
             }
@@ -358,16 +329,13 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new ProfileFragment();
                             break;
                         case R.id.nav_hives:
-                            openNewActivity();
+                           // openNewActivity();
                             selectedFragment = new HivesFragment();
-                            break;
-                        case R.id.nav_apiary:
-                            selectedFragment = new ApiaryFragment();
                             break;
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                            selectedFragment).addToBackStack(null).commit();
+                            selectedFragment).commit();
 
                     return true;
                 }
@@ -389,4 +357,28 @@ public class MainActivity extends AppCompatActivity {
         return photoURL;
     }
 
+//        public void create(View view) {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+//                    new RegisterFragment()).addToBackStack(null).commit();
+//        }
+
+//        public void register(View view) {
+//            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+//                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+//            }
+//
+//            button.setVisibility(View.VISIBLE);
+//        }
+
+//        public void login(View view) {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container,
+//                    new LoginFragment()).addToBackStack(null).commit();
+//        }
+
+//        public void signIn(View view) {
+//            for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+//                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+//            }
+//            button.setVisibility(View.VISIBLE);
+//        }
     }
