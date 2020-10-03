@@ -161,7 +161,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addApiary(View view){
-        String nameList[] = {"Name 1", "Name 2"};
+        //For test purposes
+        String nameList[] = {"Mad Urban Bees \n\n 215 Martin Luther King Jr Blvd #017, Madison, WI 53703",
+                "Dane County BeeKeepers Association \n\n 824 Jacobson Ave, Madison, WI 53714"};
 
         ListView apiaryList;
         apiaryList = (ListView)findViewById(R.id.apiaryListView);
@@ -321,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                            selectedFragment).commit();
+                            selectedFragment).addToBackStack(null).commit();
 
                     return true;
                 }
