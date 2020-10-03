@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -78,7 +79,10 @@ public class Add_Hive extends AppCompatActivity {
 
         submit = (Button) findViewById(R.id.button1);
 
-        mDBReference = FirebaseDatabase.getInstance().getReference().child("Hives");
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        Toast.makeText(this, "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+
+        mDBReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser.getUid());
         hive = new Hive_Data();
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +90,7 @@ public class Add_Hive extends AppCompatActivity {
             public void onClick(View v) {
 
                 ImageI = null;
+                //hive.setImage(R.drawable.hive);
                 NameS = Name.getText().toString();
                 hive.setName(NameS);
                 Honey_StoresS = Honey_Stores.getText().toString();
@@ -105,9 +110,9 @@ public class Add_Hive extends AppCompatActivity {
                 OwnerS = Owner.getText().toString();
                 hive.setOwner(OwnerS);
 
-                Log.w("Check the data" ,ImageI + " "+NameS + " "+Honey_StoresS + " "+InformationS + " "+InspectionS  );
+                Log.w("Check the data" ,ImageI+ " "+NameS + " "+Honey_StoresS + " "+InformationS + " "+InspectionS  );
 
-                mDBReference.child(NameS).setValue(hive);
+                mDBReference.child("Hives").child(NameS).setValue(hive);
 
                     mDBReference.addValueEventListener(new ValueEventListener() {
                         @Override

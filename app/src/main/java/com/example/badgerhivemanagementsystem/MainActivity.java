@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new ProfileFragment();
                             break;
                         case R.id.nav_hives:
-                            openNewActivity();
+                           // openNewActivity();
                             selectedFragment = new HivesFragment();
                             break;
                         case R.id.nav_apiary:

@@ -17,7 +17,6 @@
             android:name=".Add_Hive"
             android:label="@string/title_activity_add__hive"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".CreateHive"></activity>
 
         <activity android:name=".MainActivity">
             <intent-filter>
