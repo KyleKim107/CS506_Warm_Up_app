@@ -1,5 +1,6 @@
 package com.example.badgerhivemanagementsystem;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -112,7 +113,11 @@ public class Add_Hive extends AppCompatActivity {
 
                 Log.w("Check the data" ,ImageI+ " "+NameS + " "+Honey_StoresS + " "+InformationS + " "+InspectionS  );
 
-                mDBReference.child("Hives").child(NameS).setValue(hive);
+                if( !NameS.matches("") && !Honey_StoresS.matches("")&& !InformationS.matches("")
+                        && !Gain_LossS.matches("") && !InventoryS.matches("") && !InventoryS.matches("") &&
+                        !InspectionS.matches("") && !Q_ProductionS.matches("")  && !OwnerS.matches("") ){
+
+                    mDBReference.child("Hives").child(NameS).setValue(hive);
 
                     mDBReference.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -129,9 +134,16 @@ public class Add_Hive extends AppCompatActivity {
                             Log.w("Database", "Failed to read value.", error.toException());
                         }
                     });
+                    Intent intent = new Intent(Add_Hive.this , MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    Context context = getApplicationContext();
+                    CharSequence text = "All blanks should be filled!";
+                    int duration = Toast.LENGTH_SHORT;
 
-            Intent intent = new Intent(Add_Hive.this , MainActivity.class);
-            startActivity(intent);
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
     }
