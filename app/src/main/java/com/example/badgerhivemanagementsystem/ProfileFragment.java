@@ -145,7 +145,7 @@ public class ProfileFragment extends Fragment  {
 
 
         ListView listview = (ListView)view.findViewById(R.id.list);
-        mDBReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDBReference = FirebaseDatabase.getInstance().getReference().child("Hives");
 
         final ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
                 getActivity(),
@@ -187,10 +187,7 @@ public class ProfileFragment extends Fragment  {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     String add = snapshot.getKey();
-//                    String name = (String) snapshot.child(add).child("name");
                     myArrayList.add(add);
-
-
                // myArrayList.add(add);
                 listViewAdapter.notifyDataSetChanged();
 
