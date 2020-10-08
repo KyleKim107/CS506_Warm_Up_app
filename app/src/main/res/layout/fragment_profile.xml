@@ -79,6 +79,19 @@
         app:layout_constraintTop_toBottomOf="@+id/profileBackground"
         app:layout_constraintVertical_bias="0.050000012" />
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/ic_baseline_edit_24"
+        android:onClick="openSelectionFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileBackground"
+        app:layout_constraintVertical_bias="0.050000012" />
+
     <ListView
         android:id="@+id/list"
         android:layout_width="406dp"
