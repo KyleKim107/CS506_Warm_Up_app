@@ -83,7 +83,7 @@ public class Add_Hive extends AppCompatActivity {
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
         Toast.makeText(this, "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
 
-        mDBReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentFirebaseUser.getUid());
+        mDBReference = FirebaseDatabase.getInstance().getReference();
         hive = new Hive_Data();
 
         submit.setOnClickListener(new View.OnClickListener() {

@@ -33,50 +33,75 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class HivesFragment extends Fragment  implements View.OnClickListener {
 
-    GridView gridView;
     View view;
 
     Button addButton;
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mReference;
-    private ChildEventListener mChild;
 
-    private ArrayAdapter<String> adapter;
-    List<Object> Array = new ArrayList<Object>();
+    DatabaseReference mDBReference = null;
 
+    ArrayList<String> myArrayList = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.w("1", "");
+
         view = inflater.inflate(R.layout.fragment_hives, container, false);
         addButton = (Button) view.findViewById(R.id.add);
         addButton.setOnClickListener(this);
-        Log.w("2", "");
-        //initDatabase();
-//
-//        ListView listview = (ListView) view.findViewById(R.id.gridView);
-//
-//        adapter = new ArrayAdapter<String >(getActivity()
-//                                            ,android.R.layout.simple_expandable_list_item_1
-//                                            , new ArrayList<String>() );
-//        listview.setAdapter(adapter);
-        String[] menuItems = {"1", "2", "3", "4", "5", "6"};
-        ListView listview = (ListView) view.findViewById(R.id.gridView);
-        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
+
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        mDBReference = FirebaseDatabase.getInstance().getReference().child("Hives");
+        ListView listview = (ListView) view.findViewById(R.id.list);
+
+        final ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_expandable_list_item_1,
-                menuItems
+                myArrayList
         );
         listview.setAdapter(listViewAdapter);
-        Log.w("3", "");
+
+        mDBReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String add = snapshot.getKey();
+                myArrayList.add(add);
+                listViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                listViewAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         return view;
     }
 
@@ -87,39 +112,3 @@ public class HivesFragment extends Fragment  implements View.OnClickListener {
     }
 
 }
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
-
-//
-//        CustomAdapter customerAdapt = new CustomAdapter(    name , images , this);
-//        gridView.setAdapter(customerAdapt);
-//        addButton = findViewById(R.id.add);
-//
-//        addButton.setOnClickListener( new View.OnClickListener(){
-//
-//            //new Intent( CreateHive.this , Add_Hive.class)
-//
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent =new Intent(HivesFragment.this , Add_Hive.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                String selectedName = name[i];
-//                int selectedImage = images[i];
-//
-//                Log.i( "selectedImage",Integer.toString(selectedImage));
-//
-//
-//
-//                Intent intend = new Intent(HivesFragment.this, clicked_hive.class);
-//                intend.putExtra("name", selectedName).putExtra("image", selectedImage);
-//                startActivity(intend);
-//            }
-//        });

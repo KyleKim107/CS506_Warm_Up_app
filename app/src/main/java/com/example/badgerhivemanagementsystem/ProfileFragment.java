@@ -5,11 +5,14 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,17 +25,21 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.widget.ListView;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
@@ -51,6 +58,11 @@ public class ProfileFragment extends Fragment  {
 
     DatabaseReference reference;
     FirebaseUser fuser;
+
+    DatabaseReference mDBReference = null;
+
+
+    ArrayList<String> myArrayList = new ArrayList<>();
 
     StorageReference storageReference;
     private static final int IMAGE_REQUEST = 1;
@@ -71,7 +83,7 @@ public class ProfileFragment extends Fragment  {
     public String fullName;
     public String phone;
     public String photoURL;
-
+    View view;
 
     /**
      * Use this factory method to create a new instance of
@@ -102,6 +114,7 @@ public class ProfileFragment extends Fragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -109,6 +122,9 @@ public class ProfileFragment extends Fragment  {
         fullName = ((MainActivity)getActivity()).getFullName();
         phone = ((MainActivity)getActivity()).getPhone();
         photoURL = ((MainActivity)getActivity()).getPhotoURL();
+
+
+
     }
 
     @Nullable
@@ -127,13 +143,26 @@ public class ProfileFragment extends Fragment  {
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
 
+
+        ListView listview = (ListView)view.findViewById(R.id.list);
+        mDBReference = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        final ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_expandable_list_item_1,
+                myArrayList
+        );
+        listview.setAdapter(listViewAdapter);
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 mDisplayName.setText(user.getName());
                 mPhoneNumber.setText(user.getPhone());
-                if (user.getImageURL().equals("default")) {
+
+
+                    if (user.getImageURL().equals("default")) {
                     mProfileImage.setImageResource(R.mipmap.ic_launcher);
                 } else {
                     Glide.with(getContext()).load(user.getImageURL()).into(mProfileImage);
@@ -152,6 +181,44 @@ public class ProfileFragment extends Fragment  {
                 openImage();
             }
         });
+
+
+        mDBReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    String add = snapshot.getKey();
+//                    String name = (String) snapshot.child(add).child("name");
+                    myArrayList.add(add);
+
+
+               // myArrayList.add(add);
+                listViewAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                listViewAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
         // Inflate the layout for this fragment
         return view;

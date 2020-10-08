@@ -20,6 +20,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="300dp"
+        android:fontFamily="@font/alegreya_sans_sc"
+        android:onClick="logout"
+        android:text="Logout"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="130dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profileBackground" />
+
+    <Button
         android:id="@+id/add"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -33,7 +57,7 @@
         android:textColor="#ffff" />
 
     <ListView
-        android:id="@+id/gridView"
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="420dp"
         android:layout_marginTop="270dp"
